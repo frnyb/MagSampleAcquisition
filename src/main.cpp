@@ -14,7 +14,25 @@ int main(int argc, char *argv[]) {
 
     std::vector<MagSample> samples = msf.GetSamples(n_periods);
 
+    for (int i = 0; i < 12; i++) {
+        std::cout << "Time_ch" << std::to_string(i) << "\t";
+    }
+
+    for (int i = 0; i < 12; i++) {
+        std::cout << "Sample_ch" << std::to_string(i) << "\t";
+    }
+
+    std::cout << std::endl;
+
     for (int i = 0; i < samples.size(); i++) {
+        for (int j = 0; j < 12; j++) {
+            std::cout << std::to_string(samples[i][j].time_offset) << "\t";
+
+            if (j==2 || j==5 || j==8 ) {
+                std::cout << "\t";
+            }
+        }
+
         for (int j = 0; j < 12; j++) {
             std::cout << std::to_string(samples[i][j].data) << "\t";
 
