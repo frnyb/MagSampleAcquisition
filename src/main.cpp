@@ -3,16 +3,17 @@
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    if (argc != 2) {
-        std::cout << "Please pass the number of periods to sample as argument" << std::endl;
-        return 1;
-    }
-
-    unsigned int n_periods = std::stoi(argv[1]);
-
     MagSampleFetcher msf(1, 8192);
 
-    std::vector<MagSample> samples = msf.GetSamples(n_periods);
+    std::vector<MagSample> samples;
+
+    if (argc == 2) {
+        unsigned int n_periods = std::stoi(argv[1]);
+
+        samples = msf.GetSamples(n_periods);
+    } else {
+        samples = msf.GetSamples();
+    }
 
     for (int i = 0; i < 12; i++) {
         std::cout << "Time_ch" << std::to_string(i) << "\t";
@@ -43,9 +44,6 @@ int main(int argc, char *argv[]) {
 
         std::cout << std::endl;
     }
-
-
-
 
     return 0;
 }
