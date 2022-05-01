@@ -1,19 +1,26 @@
-#include "../include/MagSampleFetcher_cpp/src/mag_sample_fetcher.h"
+//#include "../include/MagSampleFetcher_cpp/src/mag_sample_fetcher.h"
+#include "../include/SlidingWindowMagSampleFetcher_cpp/src/sliding_window_mag_sample_fetcher.h"
 
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    MagSampleFetcher msf(1, 8192);
+    SlidingWindowMagSampleFetcher msf(1, 8192);
 
     std::vector<MagSample> samples;
 
     if (argc == 2) {
+
         unsigned int n_periods = std::stoi(argv[1]);
 
-        samples = msf.GetSamples(n_periods);
+        while(!msf.Start(n_periods));
+
     } else {
-        samples = msf.GetSamples();
+        
+        while(!msf.Start());
+
     }
+
+    msf.GetSamples(&samples);
 
     for (int i = 0; i < 12; i++) {
         std::cout << "Time_ch" << std::to_string(i) << "\t";
@@ -22,7 +29,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 12; i++) {
         std::cout << "Sample_ch" << std::to_string(i);
 
-        if (j != 11) {
+        if (i != 11) {
             std::cout << "\t";
         }
     }
