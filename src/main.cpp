@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[]) {
     //SlidingWindowMagSampleFetcher msf(1, 8192);
-	BRAM bram(1, 8192);
+	BRAM bram(0, 8192);
 
 	bram[0] = 1;
 
