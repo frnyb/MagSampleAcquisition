@@ -10,18 +10,27 @@
 #define		N_SAMPLES				N_PERIODS*N_SAMPLES_PER_PERIOD
 
 int main(int argc, char *argv[]) {
-    //SlidingWindowMagSampleFetcher msf(1, 8192);
 	BRAM bram(0, 8192);
+
+    int n_periods = 10;
+
+    if (argc > 1) {
+        n_periods = std::stoi(argv[1]);
+    }
+
+    bram[1] = (uint32_t)n_periods;
 
 	bram[0] = 1;
 
 	while(bram[0] == 1) ;
 
+    uint32_t n_samples = bram[2];
+
     std::cout << std::endl;
 
-    for (int i = 0; i < N_SAMPLES; i++) {
+    for (int i = 0; i < n_samples; i++) {
         for (int j = 0; j < 12; j++) {
-            std::cout << std::to_string(bram[i*N_CHANNELS+j]) << "\t";
+            std::cout << std::to_string(bram[3+i*N_CHANNELS+j]) << "\t";
         }
 
         std::cout << std::endl;
